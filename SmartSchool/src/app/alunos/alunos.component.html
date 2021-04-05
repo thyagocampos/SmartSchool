@@ -1,7 +1,10 @@
 <div class="row">
-  <div [ngClass]="{'col-sm-6': alunoSelecionado, 'col-sm-12': !alunoSelecionado}">
-    <app-titulo [titulo]="'Alunos'"></app-titulo>
-    <br>
+  <div [ngClass]="{'col-sm-8': alunoSelecionado, 'col-sm-12': !alunoSelecionado}">
+    <app-titulo [titulo]="'Aluno'">
+      <button class="btn btn-success" (click)="alunoNovo()">
+        Cadastrar aluno
+      </button>
+    </app-titulo><br>
     <table class="table table-hover">
       <thead class="thead-dark">
         <tr>
@@ -22,7 +25,7 @@
             <div class="btn-group">
               <button (click)="alunoSelec(aluno)" class="text-dark btn btn-sm btn-outline-warning">Detalhes</button>
               <button (click)="openModal(template)" class="btn btn-sm btn-outline-primary">Professores</button>
-              <button class="btn btn-sm btn-outline-danger">Desativar</button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deletarAluno(aluno.id)">Deletar</button>
             </div>
           </td>
         </tr>
@@ -30,15 +33,12 @@
     </table>
   </div>
 
-  <div class="col-sm-6" *ngIf="alunoSelecionado">
-    <div class="row">
-      <div class="mr-auto">
-        <app-titulo [titulo]="'Cód. Aluno: '+ alunoSelecionado.id"></app-titulo>
-      </div>
-      <div class="mt-3">
-        <button class="btn btn-sm btn-outline-danger" (click)="voltar()">Fechar</button>
-      </div>
-    </div>
+  <div class="col-sm-4" *ngIf="alunoSelecionado">
+    <app-titulo [titulo]="(alunoSelecionado.id == 0? 'Novo Aluno' : 'Aluno:'+ alunoSelecionado.id)">
+      <button class="btn btn-sm btn-warning" (click)="voltar()">
+        Voltar
+      </button>
+    </app-titulo>
 
     <form [formGroup]="alunoForm" (submit)="alunoSubmit()">
       <div class="form-group">
@@ -54,11 +54,10 @@
         <input type="text" formControlName="telefone" class="form-control">
       </div>
       <hr>
-      <button class="btn btn-success" [disabled]="!alunoForm.valid">Enviar</button>
+      <button class="btn btn-success" [disabled]="!alunoForm.valid">Salvar</button>
     </form>
 
   </div>
-
 </div>
 
 <ng-template #template>  
